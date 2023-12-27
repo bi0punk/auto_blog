@@ -381,94 +381,14 @@
     "password": "pbkdf2_sha256$180000$zHU6fKBrxxck$s1P63t5r6Xy/e8oBN+JCBMyuzELrTWm97Lkp8t1pA78=",
     "last_login": "2020-07-11T09:02:07.508Z",
     "is_superuser": true,
-    "username": "elpythonista",
-    "first_name": "Oscar",
-    "last_name": "Ramirez",
-    "email": "me@elpythonista.com",
+    "username": "admin123",
+    "first_name": "adm",
+    "last_name": "003",
+    "email": "e@email.com",
     "is_staff": true,
     "is_active": true,
     "date_joined": "2020-07-10T11:06:38Z",
     "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 2,
-  "fields": {
-    "password": "pbkdf2_sha256$180000$gJwwWnQqlCuU$lw1Iklk4FnglMJMVQvJuA9cPC2FEKfoneAnwSfQuBxQ=",
-    "last_login": "2020-07-11T09:02:56.790Z",
-    "is_superuser": false,
-    "username": "ana",
-    "first_name": "Ana",
-    "last_name": "S\u00e1nchez",
-    "email": "asanchez@djangoafondo.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2020-07-10T19:26:19Z",
-    "groups": [
-      1
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 3,
-  "fields": {
-    "password": "pbkdf2_sha256$180000$2kdEGyxoP02i$y9KYu346UQYFWJYBdNDHprbCUL/9cJ+9m4p8jvZYvJ0=",
-    "last_login": "2020-07-10T19:38:24.202Z",
-    "is_superuser": false,
-    "username": "pedro",
-    "first_name": "Pedro",
-    "last_name": "Rodriguez",
-    "email": "prodriguez@ejemplo.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2020-07-10T19:26:43Z",
-    "groups": [
-      1
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 4,
-  "fields": {
-    "password": "pbkdf2_sha256$180000$cMlNXz7YKlhu$5Oug6iLZr5H8L166XkbRnhDCPvhjyb8tKxUP2Jy6BrY=",
-    "last_login": "2020-07-10T20:15:18.006Z",
-    "is_superuser": false,
-    "username": "angel",
-    "first_name": "\u00c1ngel",
-    "last_name": "Perez",
-    "email": "aperez@djangoafondo.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2020-07-10T19:26:50Z",
-    "groups": [
-      1
-    ],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 5,
-  "fields": {
-    "password": "pbkdf2_sha256$180000$1L0xqdDDKtJ4$mI7F7cQttYC/uedRZ92Jrk+kXspGeLcU59Hcw+HrC9E=",
-    "last_login": "2020-07-10T20:19:09.842Z",
-    "is_superuser": false,
-    "username": "maria",
-    "first_name": "Mar\u00eda",
-    "last_name": "Jim\u00e9nez",
-    "email": "mjimenez@python.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2020-07-10T19:27:05Z",
-    "groups": [
-      1
-    ],
     "user_permissions": []
   }
 }
