@@ -20,6 +20,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     categories = models.ManyToManyField(Category)
 
     class Meta:
