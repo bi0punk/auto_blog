@@ -1,19 +1,23 @@
 {% extends 'blog_base.html' %}
-
 {% block content %}
     <div class="justify-content-md-center">
         {% for obj in post_list %}
             <div class="card m-5 shadow">
-                <div class="card-header">
+                <div class="card-header text-center">
                     {{ obj.title }}
                 </div>
+                {% if obj.image %}  <!-- Verificar si hay una imagen asociada -->
+                    <!-- En tu plantilla HTML -->
+                    <img src="{{ obj.image.url }}" alt="{{ obj.title }}" width="500" height="200" class="img-fluid">
+                {% endif %}
+
                 <div class="card-body">
                     {{ obj.body|linebreaks }}
 
                     <blockquote class="blockquote">
                         <footer class="blockquote-footer">{{ obj.author.get_full_name }} - {{ obj.created_at }}</footer>
                     </blockquote>
-                    {% for category in obj.categories.values %}
+                    {% for category in obj.categories.all %}
                         <a class="badge badge-info"
                            href="{% url 'posts_list' %}?category={{ category.id }}">{{ category.short_name }}</a>
                     {% endfor %}
@@ -43,4 +47,3 @@
         </nav>
     </div>
 {% endblock %}
-
