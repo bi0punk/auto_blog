@@ -6,9 +6,8 @@
                 <div class="card-header text-center">
                     {{ obj.title }}
                 </div>
-                {% if obj.image %}  <!-- Verificar si hay una imagen asociada -->
-                    <!-- En tu plantilla HTML -->
-                    <img src="{{ obj.image.url }}" alt="{{ obj.title }}" width="500" height="200" class="img-fluid">
+                {% if obj.image %} 
+                    <img src="{{ obj.image.url }}" alt="{{ obj.title }}" width="300" height="200" class="img-fluid">
                 {% endif %}
 
                 <div class="card-body">
