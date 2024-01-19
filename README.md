@@ -1,2 +1,2 @@
 # scrapper-sismologia
-script en python para extraer información del sitio sismologia.cl 
+App web estilo blog, que muestra de manera amigable los sismos ocurridos en territorio nacioal, se van actualizando de manera automatica

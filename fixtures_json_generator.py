@@ -2,14 +2,9 @@ import csv
 import json
 
 def csv_to_json(csv_file_path, json_file_path):
-    # Lista para almacenar los datos en formato JSON
     json_data = []
-    # Abrir el archivo CSV
     with open(csv_file_path, 'r') as csv_file:
-        # Crear un lector CSV
         csv_reader = csv.DictReader(csv_file)
-
-        # Iterar sobre las filas del CSV
         for row in csv_reader:
             # Estructurar los datos en el formato JSON requerido
             json_entry = {
@@ -24,8 +19,6 @@ def csv_to_json(csv_file_path, json_file_path):
                     "categories": [int(category) for category in row['categories'].split(',')]
                 }
             }
-
-            # Agregar la entrada JSON a la lista
             json_data.append(json_entry)
     # Escribir los datos en formato JSON al archivo
     with open(json_file_path, 'w') as json_file:
