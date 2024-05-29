@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check URL</title>
+</head>
+<body>
+    <h1>Check URL</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Check</button>
+    </form>
+    {% if code %}
+        <p>Response Code: {{ code }}</p>
+    {% endif %}
+</body>
+</html>
