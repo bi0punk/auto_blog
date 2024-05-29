@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content }}</p>
+        <p><small>by {{ post.author }} on {{ post.date_posted }}</small></p>
+        
+        <h2 class="mt-5">Comments</h2>
+        <div class="list-group mb-4">
+            {% for comment in comments %}
+                <div class="list-group-item">
+                    <p>{{ comment.content }}</p>
+                    <small>by {{ comment.author }} on {{ comment.date_posted }}</small>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <h3>Add a comment</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% load form_tags %}
+            <div class="form-group">
+                {{ comment_form.content.label_tag }}
+                {{ comment_form.content|add_class:"form-control" }}
+            </div>
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+        
+        <a href="{% url 'post_list' %}" class="btn btn-secondary mt-4">Back to Posts</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
