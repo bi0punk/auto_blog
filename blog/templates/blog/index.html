@@ -6,6 +6,15 @@
   <title>DkBlog</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
+  <!-- jQuery -->
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <!-- DataTables JS -->
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -19,7 +28,6 @@
       <div class="url"><a href="#">www.your-blog.com</a></div>
     </div>
   </div>
-
   <div id="top">
     <div class="content">
       <div id="menu">
@@ -29,10 +37,9 @@
         </ul>
       </div>
       <h1><a href="#">Data EarthQuake Chile Blog</a></h1>
-      <h2>Your Best Slogan here</h2>
+      <h2>Simple Resume of Earthquakes</h2>
     </div>
   </div>
-
   <div class="content">
     <div id="main">
       <div class="right_side">
@@ -40,9 +47,14 @@
           <h3>Thank you for visiting!</h3>
           <p>Data data data <br>
             <a href="#">Read more...</a>
-            <div class="cleanslate w24tz-current-time w24tz-small" style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;"><p><a href="//24timezones.com/Santiago/time" style="text-decoration: none" class="clock24" id="tz24-1717177098-c1232-eyJob3VydHlwZSI6IjI0Iiwic2hvd2RhdGUiOiIxIiwic2hvd3NlY29uZHMiOiIwIiwiY29udGFpbmVyX2lkIjoiY2xvY2tfYmxvY2tfY2I2NjVhMGIwYTVmM2Y1IiwidHlwZSI6ImRiIiwibGFuZyI6ImVuIn0=" title="timezone - Santiago" target="_blank">Santiago time</a></p><div id="clock_block_cb665a0b0a5f3f5"></div></div>
-<script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
-
+          <div class="cleanslate w24tz-current-time w24tz-small"
+            style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;">
+            <p><a href="//24timezones.com/Santiago/time" style="text-decoration: none" class="clock24"
+                id="tz24-1717177098-c1232-eyJob3VydHlwZSI6IjI0Iiwic2hvd2RhdGUiOiIxIiwic2hvd3NlY29uZHMiOiIwIiwiY29udGFpbmVyX2lkIjoiY2xvY2tfYmxvY2tfY2I2NjVhMGIwYTVmM2Y1IiwidHlwZSI6ImRiIiwibGFuZyI6ImVuIn0="
+                title="timezone - Santiago" target="_blank">Santiago time</a></p>
+            <div id="clock_block_cb665a0b0a5f3f5"></div>
+          </div>
+          <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
           </p>
           <h3>Last Articles:</h3>
           <ul>
@@ -57,7 +69,6 @@
           <a href="#"><img src="{% static 'blog/images/rss.jpg' %}" alt="RSS Feed"></a>
         </div>
       </div>
-
       <div class="right_side">
         <div class="pad">
           <h3>Categories:</h3>
@@ -70,7 +81,6 @@
           <p>Links4se.com is a seo-friendly and human-edited general directory.</p>
         </div>
       </div>
-
       <div id="left_side">
         <div class="intro">
           <div class="pad">Daily summary of seismic movements in national territory, updated style blog <br>
@@ -82,24 +92,22 @@
           <h3>Posted on April 11, 2007 in <a href="#">sNews</a></h3>
           <p>A website like.</p>
           <p>Here a code sample made with Code2CSS:</p>
-          <pre class="code">
-            | Data              |      |      |      |
-            |-------------------|------|------|------|
-            | Mayuor Magnitud   | data | data | data |
-            | Menor Magnitud    | data | data | data |
-            | Mayor profundiad  | data | data | data |
-            | Menor profundiad  | data | data | data |
-            |                   |      |      |      |
-                      </pre>
+          <div class="card" style="width: 18rem;">
+          </div>
+          <div class="intro">
+            <div class="pad">Daily summary of seismic movements in national territory, updated style blog <br>
+              <a href="#">Download</a>&nbsp; | &nbsp;<a href="#">Read more...</a>
+            </div>
+          </div>
+
           <p>Aditional info:</p>
           <blockquote>
             <p>Posted date: 15, Mayo, 2024 - 23:45 </p>
           </blockquote>
-<!--           <div class="date"><a href="#">Comments (5)</a></div> -->
+          <!--           <div class="date"><a href="#">Comments (5)</a></div> -->
         </div>
       </div>
     </div>
-
     <div id="footer">
       <div class="right">&copy; Copyright 2023, Your Website - Design: <a href="">Free
           Css Templates</a></div>
