@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html class="dark">
 <head>
   <meta charset="UTF-8">
   <title>DkBlog</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+  <style>
+    .pad {
+        padding: 20px;
+    }
+
+    .terminal {
+        background-color: black;
+        color: rgb(0, 255, 0);
+        font-family: 'Courier New', Courier, monospace;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .prompt {
+        display: block;
+        margin: 10px 0;
+    }
+</style>
   <!-- DataTables CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<!--   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
 
   <!-- jQuery -->
   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -15,6 +34,9 @@
   <!-- DataTables JS -->
   <script type="text/javascript" charset="utf8"
     src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -88,26 +110,28 @@
           </div>
         </div>
         <div class="mpart">
-          <h2>Webdesign</h2>
-          <h3>Posted on April 11, 2007 in <a href="#">sNews</a></h3>
-          <p>A website like.</p>
-          <p>Here a code sample made with Code2CSS:</p>
+          <h2>Resumen del {{ fecha }}</h2>
+          <h3>Publicado el {{ fecha }} en <a href="#">Sismología Chile</a></h3>
+          <p>Un sitio web similar.</p>
           <div class="card" style="width: 18rem;">
+            <!-- Contenido de la tarjeta -->
           </div>
           <div class="intro">
-            <div class="pad">Daily summary of seismic movements in national territory, updated style blog <br>
-              <a href="#">Download</a>&nbsp; | &nbsp;<a href="#">Read more...</a>
+            <div class="pad">
+              <div class="terminal">
+                <span class="prompt">user@machine:~$</span>
+            </div>
+              
             </div>
           </div>
+        </div>
+        
 
-          <p>Aditional info:</p>
+<!--           <p>Aditional info:</p>
           <blockquote>
             <p>Posted date: 15, Mayo, 2024 - 23:45 </p>
-          </blockquote>
+          </blockquote> -->
           <!--           <div class="date"><a href="#">Comments (5)</a></div> -->
-        </div>
-      </div>
-    </div>
     <div id="footer">
       <div class="right">&copy; Copyright 2023, Your Website - Design: <a href="">Free
           Css Templates</a></div>
@@ -116,5 +140,4 @@
     </div>
   </div>
 </body>
-
 </html>
