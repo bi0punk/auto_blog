@@ -1,7 +1,3 @@
-Simple blog-style Django project, which creates posts automatically
-
-
-
 .
 ├── auto_blog
 │   ├── asgi.py
