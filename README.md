@@ -1,4 +1,4 @@
-.
+```
 ├── auto_blog
 │   ├── asgi.py
 │   ├── __init__.py
@@ -41,6 +41,4 @@
 ├── README.md
 ├── requirements.txt
 ├── task_scripts
-└── tree.txt
-
-14 directories, 48 files
+└── tree.txt```
