@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from celery.schedules import crontab
-
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'auto_blog',
     'blog',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -110,6 +112,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+# Configuración para Celery
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
@@ -117,10 +121,15 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
-
+# Configuración para Celery Beat
 CELERY_BEAT_SCHEDULE = {
     'mi-tarea-programada': {
-        'task': 'myapp.tasks.mi_tarea',
-        'schedule': crontab(minute='*/30'),  # Ejecutar cada 30 minutos
+        'task': 'auto_blog.tasks.data_scraping',  # Asegúrate de que esta ruta es correcta
+        #'schedule': crontab(minute='*'),  # Ejecutar cada minuto
+        # 'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día
+        'schedule': timedelta(days=1),  # Ejecutar cada 24 horas
     },
 }
+
+# Si quieres usar un backend de resultados diferente, añade la configuración aquí
+# CELERY_RESULT_BACKEND = 'django-db'  # O cualquier otro backend que prefieras
