@@ -2,6 +2,14 @@ from celery import shared_task
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import os
+from django.conf import settings
+import json
+from datetime import datetime
+from django.core.management import call_command
+
+
+
 
 @shared_task
 def data_scraping():
@@ -9,9 +17,6 @@ def data_scraping():
     response = requests.get(url)
     response.raise_for_status()  # Verificar que la solicitud fue exitosa
     soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Imprimir el HTML completo para verificar la estructura
-    #print(soup.prettify())
     
     # Buscar la tabla usando la clase 'sismologia detalle'
     table = soup.find('table', class_='sismologia detalle')
@@ -46,7 +51,40 @@ def data_scraping():
         print("El DataFrame está vacío.")
     else:
         print(df)
+
+    # Crear una lista de diccionarios con la estructura de fixtures
+    fixtures = []
+    for index, row in df.iterrows():
+        fixture = {
+            "model": "blog.post",
+            "pk": index + 1,
+            "fields": {
+                "title": f"Sismo en {row[0]}",
+                "content": f"Magnitud: {row[1]}, Profundidad: {row[2]}, Fecha y Hora: {row[3]}",
+                "created_at": datetime.now().isoformat()
+            }
+        }
+        fixtures.append(fixture)
+
+    # Guardar el JSON en el directorio de fixtures sin BOM
+    fixtures_dir = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures')
+    os.makedirs(fixtures_dir, exist_ok=True)
+    json_file_path = os.path.join(fixtures_dir, 'sismos_20240702.json')
     
-    df.to_csv('sismos_20240702.csv', index=False, encoding='utf-8-sig')
+    with open(json_file_path, 'w', encoding='utf-8') as json_file:
+        json.dump(fixtures, json_file, ensure_ascii=False, indent=4)
     
     print("Ejecutando tarea programada")
+
+
+@shared_task
+def load_fixture():
+    fixture_path = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures', 'sismos_20240702.json')
+    if os.path.exists(fixture_path):
+        try:
+            call_command('loaddata', fixture_path)
+            print("Fixture loaded successfully")
+        except Exception as e:
+            print(f"Error loading fixture: {e}")
+    else:
+        print(f"No fixture named 'sismos_20240702.json' found at {fixture_path}")
