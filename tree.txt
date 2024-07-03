@@ -1,7 +1,15 @@
 .
 ├── auto_blog
 │   ├── asgi.py
+│   ├── fixtures
+│   │   └── sismos_20240702.json
 │   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-311.pyc
+│   │   ├── settings.cpython-311.pyc
+│   │   ├── tasks.cpython-311.pyc
+│   │   ├── urls.cpython-311.pyc
+│   │   └── wsgi.cpython-311.pyc
 │   ├── settings.py
 │   ├── tasks.py
 │   ├── urls.py
@@ -14,8 +22,35 @@
 │   ├── migrations
 │   │   ├── 0001_initial.py
 │   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── 0001_initial.cpython-311.pyc
+│   │       └── __init__.cpython-311.pyc
 │   ├── models.py
+│   ├── __pycache__
+│   │   ├── admin.cpython-311.pyc
+│   │   ├── apps.cpython-311.pyc
+│   │   ├── celery.cpython-311.pyc
+│   │   ├── __init__.cpython-311.pyc
+│   │   ├── models.cpython-311.pyc
+│   │   ├── urls.cpython-311.pyc
+│   │   └── views.cpython-311.pyc
 │   ├── static
+│   │   └── blog
+│   │       ├── console.css
+│   │       ├── images
+│   │       │   ├── commentb.gif
+│   │       │   ├── commentb.jpg
+│   │       │   ├── contact.gif
+│   │       │   ├── home.gif
+│   │       │   ├── rmenuhead.gif
+│   │       │   ├── rss.jpg
+│   │       │   ├── sitemap.gif
+│   │       │   ├── tabl.gif
+│   │       │   ├── tabr.gif
+│   │       │   └── topbg.gif
+│   │       ├── js
+│   │       │   └── console.js
+│   │       └── style.css
 │   ├── templates
 │   │   └── blog
 │   │       ├── conosle.html
@@ -24,13 +59,15 @@
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
+├── celerybeat-schedule.db
 ├── db.sqlite3
 ├── env.sample
 ├── manage.py
 ├── README.md
 ├── requirements.txt
+├── sismos_20240702.csv
 ├── structure.txt
 ├── task_scripts
 └── tree.txt
 
-14 directories, 51 files
+15 directories, 56 files
