@@ -2,7 +2,7 @@
 <html class="dark">
 <head>
   <meta charset="UTF-8">
-  <title>DkBlog</title>
+  <title>Data EarthQuake</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'blog/style.css' %}">
   <style>
@@ -92,8 +92,8 @@
 <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
           <h3>Popular Articles:</h3>
           <ul>
-            <li><a href="#">LOST - John Locke - Speed...</a></li>
-            <li><a href="#">Painting of the Mona Lisa in...</a></li>
+            <li><a href="#">Weather</a></li>
+            <li><a href="#">Api</a></li>
           </ul>
           <a href="#"><img src="{% static 'blog/images/rss.jpg' %}" alt="RSS Feed"></a>
         </div>
@@ -107,7 +107,7 @@
             <li><a href="#">Terremotos</a></li>
           </ul>
           <h3>Directory</h3>
-          <p>Links4se.com is a seo-friendly and human-edited general directory.</p>
+          <p>some text.</p>
         </div>
       </div>
       <div id="left_side">
@@ -126,6 +126,12 @@
           <div class="intro">
             <div class="pad">
               <div class="terminal">
+                {% for post in posts %}
+            <li>{{ post.title }} - {{ post.created_at }}</li>
+        {% empty %}
+            <li>No hay posts disponibles.</li>
+        {% endfor %}
+
                   <span class="prompt">user@machine:~$</span>
                   <table>
                       <thead>
