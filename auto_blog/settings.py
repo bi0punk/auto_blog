@@ -125,11 +125,18 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
     'mi-tarea-programada': {
         'task': 'auto_blog.tasks.data_scraping',  # Asegúrate de que esta ruta es correcta
-        #'schedule': crontab(minute='*'),  # Ejecutar cada minuto
-        # 'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día
-        'schedule': timedelta(days=1),  # Ejecutar cada 24 horas
+        'schedule': crontab(minute='*'),  # Ejecutar cada minuto
+        #'schedule': crontab(minute=0, hour=9),  # Ejecutar a las 00:00 cada día'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día
+        #'schedule': timedelta(days=1),  # Ejecutar cada 24 horas
+    },
+    'load-fixture-every-hour': {
+        'task': 'auto_blog.tasks.load_fixture',
+        'schedule': crontab(minute='*'),  # Cada hora en el minuto 0
     },
 }
+
+
+
 
 # Si quieres usar un backend de resultados diferente, añade la configuración aquí
 # CELERY_RESULT_BACKEND = 'django-db'  # O cualquier otro backend que prefieras
