@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="dark">
+
 <head>
   <meta charset="UTF-8">
   <title>Data EarthQuake</title>
@@ -7,41 +8,44 @@
   <link rel="stylesheet" href="{% static 'blog/style.css' %}">
   <style>
     .pad {
-        padding: 20px;
+      padding: 20px;
     }
 
     .terminal {
-        background-color: black;
-        color: rgb(0, 255, 0);
-        font-family: 'Courier New', Courier, monospace;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        overflow-x: auto;
+      background-color: black;
+      color: rgb(0, 255, 0);
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      overflow-x: auto;
     }
 
     .prompt {
-        display: block;
-        margin: 10px 0;
+      display: block;
+      margin: 10px 0;
     }
 
     table {
-        width: 100%;
-        border-collapse: collapse;
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    table, th, td {
-        border: 1px solid green;
+    table,
+    th,
+    td {
+      border: 1px solid green;
     }
 
-    th, td {
-        padding: 8px;
-        text-align: left;
+    th,
+    td {
+      padding: 8px;
+      text-align: left;
     }
-</style>
+  </style>
   <!-- DataTables CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-<!--   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
 
   <!-- jQuery -->
   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -84,12 +88,24 @@
           <h3>Thank you for visiting!</h3>
           <p>Data data data <br>
             <a href="#">Read more...</a>
-            <div class="cleanslate w24tz-current-time w24tz-small" style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;"><p><a href="//24timezones.com/Santiago/time" style="text-decoration: none" class="clock24" id="tz24-1717820043-c1232-eyJob3VydHlwZSI6MTIsInNob3dkYXRlIjoiMSIsInNob3dzZWNvbmRzIjoiMSIsImNvbnRhaW5lcl9pZCI6ImNsb2NrX2Jsb2NrX2NiNjY2M2RhOGJiOTRmMCIsInR5cGUiOiJkYiIsImxhbmciOiJlbiJ9" title="Santiago current time" target="_blank">Santiago time</a></p><div id="clock_block_cb6663da8bb94f0"></div></div>
-            <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
+          <div class="cleanslate w24tz-current-time w24tz-small"
+            style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;">
+            <p><a href="//24timezones.com/Santiago/time" style="text-decoration: none" class="clock24"
+                id="tz24-1717820043-c1232-eyJob3VydHlwZSI6MTIsInNob3dkYXRlIjoiMSIsInNob3dzZWNvbmRzIjoiMSIsImNvbnRhaW5lcl9pZCI6ImNsb2NrX2Jsb2NrX2NiNjY2M2RhOGJiOTRmMCIsInR5cGUiOiJkYiIsImxhbmciOiJlbiJ9"
+                title="Santiago current time" target="_blank">Santiago time</a></p>
+            <div id="clock_block_cb6663da8bb94f0"></div>
+          </div>
+          <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
           </p>
           <h3>Last Articles:</h3>
-          <div class="cleanslate w24tz-current-time w24tz-small" style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;"><p><a href="//24timezones.com/time-zone/utc" style="text-decoration: none" class="clock24" id="tz24-1717819962-tzutc-eyJob3VydHlwZSI6MTIsInNob3dkYXRlIjoiMSIsInNob3dzZWNvbmRzIjoiMSIsImNvbnRhaW5lcl9pZCI6ImNsb2NrX2Jsb2NrX2NiNjY2M2RhM2EwMmE4MSIsInR5cGUiOiJkYiIsImxhbmciOiJlbiJ9" title="UTC time now" target="_blank">UTC time</a></p><div id="clock_block_cb6663da3a02a81"></div></div>
-<script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
+          <div class="cleanslate w24tz-current-time w24tz-small"
+            style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;">
+            <p><a href="//24timezones.com/time-zone/utc" style="text-decoration: none" class="clock24"
+                id="tz24-1717819962-tzutc-eyJob3VydHlwZSI6MTIsInNob3dkYXRlIjoiMSIsInNob3dzZWNvbmRzIjoiMSIsImNvbnRhaW5lcl9pZCI6ImNsb2NrX2Jsb2NrX2NiNjY2M2RhM2EwMmE4MSIsInR5cGUiOiJkYiIsImxhbmciOiJlbiJ9"
+                title="UTC time now" target="_blank">UTC time</a></p>
+            <div id="clock_block_cb6663da3a02a81"></div>
+          </div>
+          <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
           <h3>Popular Articles:</h3>
           <ul>
             <li><a href="#">Weather</a></li>
@@ -116,10 +132,49 @@
             <a href="#">Download</a>&nbsp; | &nbsp;<a href="#">Read more...</a>
           </div>
         </div>
+
+<!--         <div class="mpart">
+          <h2>Resumen del {{ fecha }}</h2>
+          <h3>Publicado el {{ fecha }} en <a href="#">Sismología Chile</a></h3>
+          <div class="card" style="width: 18rem;">
+            <!-- Contenido de la tarjeta -->
+  <!--         </div>
+          <div class="intro">
+            <div class="pad">
+              <div class="terminal">
+                {% for post in posts %}
+                <li>{{ post.title }} - {{ post.created_at }}</li>
+                {% empty %}
+                <li>No hay posts disponibles.</li>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div> --> -->
+
+        {% for post in posts %}
+        <div class="mpart">
+          <h2>Resumen del {{ post.created_at }}</h2>
+          <h3>Publicado el {{ post.created_at }} en <a href="#">Sismología Chile</a></h3>
+          <div class="card" style="width: 18rem;">
+            <div class="intro">
+              <div class="pad">
+                <div class="terminal">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <p class="card-text">{{ post.summary }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No hay posts disponibles.</p>
+        {% endfor %}
+
+
         <div class="mpart">
           <h2>Resumen del {{ fecha }}</h2>
           <h3>Publicado el {{ fecha }} en <a href="#">Sismología Chile</a></h3>
-          <p>Un sitio web similar.</p>
           <div class="card" style="width: 18rem;">
             <!-- Contenido de la tarjeta -->
           </div>
@@ -127,84 +182,28 @@
             <div class="pad">
               <div class="terminal">
                 {% for post in posts %}
-            <li>{{ post.title }} - {{ post.created_at }}</li>
-        {% empty %}
-            <li>No hay posts disponibles.</li>
-        {% endfor %}
-
-                  <span class="prompt">user@machine:~$</span>
-                  <table>
-                      <thead>
-                          <tr>
-                              <th>City name</th>
-                              <th>Area</th>
-                              <th>Population</th>
-                              <th>Annual Rainfall</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>Data</td>
-                              <td>Data</td>
-                              <td>Data</td>
-                              <td>Data</td>
-                          </tr>
-                          <tr>
-                              <td>Data</td>
-                              <td>5905</td>
-                              <td>1857594</td>
-                              <td>1146.4</td>
-                          </tr>
-                          <tr>
-                              <td>Darwin</td>
-                              <td>112</td>
-                              <td>120900</td>
-                              <td>1714.7</td>
-                          </tr>
-                          <tr>
-                              <td>Hobart</td>
-                              <td>1357</td>
-                              <td>205556</td>
-                              <td>619.5</td>
-                          </tr>
-                          <tr>
-                              <td>Sydney</td>
-                              <td>2058</td>
-                              <td>4336374</td>
-                              <td>1214.8</td>
-                          </tr>
-                          <tr>
-                              <td>Melbourne</td>
-                              <td>1566</td>
-                              <td>3806092</td>
-                              <td>646.9</td>
-                          </tr>
-                          <tr>
-                              <td>Perth</td>
-                              <td>5386</td>
-                              <td>1554769</td>
-                              <td>869.4</td>
-                          </tr>
-                      </tbody>
-                  </table>
+                <li>{{ post.title }} - {{ post.created_at }}</li>
+                {% empty %}
+                <li>No hay posts disponibles.</li>
+                {% endfor %}
               </div>
-          </div>
-
+            </div>
           </div>
         </div>
-        
 
-<!--           <p>Aditional info:</p>
+
+        <!--           <p>Aditional info:</p>
           <blockquote>
             <p>Posted date: 15, Mayo, 2024 - 23:45 </p>
           </blockquote> -->
-          <!--           <div class="date"><a href="#">Comments (5)</a></div> -->
-    <div id="footer">
-      <div class="right">&copy; Copyright 2024, Your Website - Design: <a href="">Free
-          Css Templates</a></div>
-      <a href="#">Home</a> - <a href="http://validator.w3.org/check?uri=referer" title="Validate">XHTML</a> - <a
-        href="http://jigsaw.w3.org/css-validator/check/referer" title="Validate">CSS</a>
-    </div>
-  </div>
+        <!--           <div class="date"><a href="#">Comments (5)</a></div> -->
+        <div id="footer">
+          <div class="right">&copy; Copyright 2024, Your Website - Design: <a href="">Free
+              Css Templates</a></div>
+          <a href="#">Home</a> - <a href="http://validator.w3.org/check?uri=referer" title="Validate">XHTML</a> - <a
+            href="http://jigsaw.w3.org/css-validator/check/referer" title="Validate">CSS</a>
+        </div>
+      </div>
 </body>
+
 </html>
