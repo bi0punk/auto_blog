@@ -1,0 +1,20 @@
+[
+    {
+        "model": "blog.post",
+        "pk": 1,
+        "fields": {
+            "title": "Sismo en 2024-07-03 23:08:1035 km al NE de Alto del Carmen",
+            "content": "Magnitud: 2024-07-04 03:08:10, Profundidad: -28.505-70.274, Fecha y Hora: 112 km",
+            "created_at": "2024-07-04T05:00:00.167671"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 2,
+        "fields": {
+            "title": "Sismo en 2024-07-03 20:51:5570 km al SE de Socaire",
+            "content": "Magnitud: 2024-07-04 00:51:55, Profundidad: -24.040-67.407, Fecha y Hora: 262 km",
+            "created_at": "2024-07-04T05:00:00.167784"
+        }
+    }
+]

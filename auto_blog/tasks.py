@@ -7,15 +7,19 @@ from django.conf import settings
 import json
 from datetime import datetime
 from django.core.management import call_command
-
-
+from django.utils import timezone
 
 
 @shared_task
 def data_scraping():
-    url = 'https://www.sismologia.cl/sismicidad/catalogo/2024/07/20240702.html'
-    response = requests.get(url)
-    response.raise_for_status()  # Verificar que la solicitud fue exitosa
+    url = 'https://www.sismologia.cl/sismicidad/catalogo/2024/07/20240704.html'
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Verificar que la solicitud fue exitosa
+    except requests.RequestException as e:
+        print(f"Error al realizar la solicitud: {e}")
+        return
+
     soup = BeautifulSoup(response.text, 'html.parser')
     
     # Buscar la tabla usando la clase 'sismologia detalle'
@@ -59,8 +63,8 @@ def data_scraping():
             "model": "blog.post",
             "pk": index + 1,
             "fields": {
-                "title": f"Sismo en {row[0]}",
-                "content": f"Magnitud: {row[1]}, Profundidad: {row[2]}, Fecha y Hora: {row[3]}",
+                "title": f"Sismo en {row.iloc[0]}",
+                "content": f"Magnitud: {row.iloc[1]}, Profundidad: {row.iloc[2]}, Fecha y Hora: {row.iloc[3]}",
                 "created_at": datetime.now().isoformat()
             }
         }
@@ -69,10 +73,14 @@ def data_scraping():
     # Guardar el JSON en el directorio de fixtures sin BOM
     fixtures_dir = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures')
     os.makedirs(fixtures_dir, exist_ok=True)
-    json_file_path = os.path.join(fixtures_dir, 'sismos_20240702.json')
+    json_file_path = os.path.join(fixtures_dir, 'sismos_20240704.json')
     
-    with open(json_file_path, 'w', encoding='utf-8') as json_file:
-        json.dump(fixtures, json_file, ensure_ascii=False, indent=4)
+    try:
+        with open(json_file_path, 'w', encoding='utf-8') as json_file:
+            json.dump(fixtures, json_file, ensure_ascii=False, indent=4)
+    except IOError as e:
+        print(f"Error al guardar el archivo JSON: {e}")
+        return
     
     print("Ejecutando tarea programada")
 
