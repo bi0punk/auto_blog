@@ -125,7 +125,7 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
     'mi-tarea-programada': {
         'task': 'auto_blog.tasks.data_scraping',  # Asegúrate de que esta ruta es correcta
-        'schedule': crontab(minute='*'),  # Ejecutar cada minuto
+        'schedule': crontab(minute='*/500'),  # Ejecutar cada minuto
         #'schedule': crontab(minute=0, hour=9),  # Ejecutar a las 00:00 cada día'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día
         #'schedule': timedelta(days=1),  # Ejecutar cada 24 horas
     },
