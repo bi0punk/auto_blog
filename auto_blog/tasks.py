@@ -87,7 +87,7 @@ def data_scraping():
 
 @shared_task
 def load_fixture():
-    fixture_path = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures', 'sismos_20240702.json')
+    fixture_path = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures', 'sismos_20240704.json')
     if os.path.exists(fixture_path):
         try:
             call_command('loaddata', fixture_path)

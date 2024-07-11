@@ -3,18 +3,72 @@
         "model": "blog.post",
         "pk": 1,
         "fields": {
-            "title": "Sismo en 2024-07-03 23:08:1035 km al NE de Alto del Carmen",
-            "content": "Magnitud: 2024-07-04 03:08:10, Profundidad: -28.505-70.274, Fecha y Hora: 112 km",
-            "created_at": "2024-07-04T05:00:00.167671"
+            "title": "Sismo en 2024-07-04 06:14:3768 km al E de Socaire",
+            "content": "Magnitud: 2024-07-04 10:14:37, Profundidad: -23.576-67.224, Fecha y Hora: 239 km",
+            "created_at": "2024-07-04T12:05:13.134166"
         }
     },
     {
         "model": "blog.post",
         "pk": 2,
         "fields": {
+            "title": "Sismo en 2024-07-04 05:52:5553 km al SO de OllagÃ¼e",
+            "content": "Magnitud: 2024-07-04 09:52:55, Profundidad: -21.639-68.516, Fecha y Hora: 120 km",
+            "created_at": "2024-07-04T12:05:13.134279"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 3,
+        "fields": {
+            "title": "Sismo en 2024-07-04 03:14:4060 km al NO de Pisagua",
+            "content": "Magnitud: 2024-07-04 07:14:40, Profundidad: -19.374-70.732, Fecha y Hora: 28 km",
+            "created_at": "2024-07-04T12:05:13.134363"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 4,
+        "fields": {
+            "title": "Sismo en 2024-07-04 01:19:0955 km al SE de Socaire",
+            "content": "Magnitud: 2024-07-04 05:19:09, Profundidad: -24.043-67.679, Fecha y Hora: 249 km",
+            "created_at": "2024-07-04T12:05:13.134445"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 5,
+        "fields": {
+            "title": "Sismo en 2024-07-04 01:13:3717 km al S de Calama",
+            "content": "Magnitud: 2024-07-04 05:13:37, Profundidad: -22.616-68.988, Fecha y Hora: 95 km",
+            "created_at": "2024-07-04T12:05:13.134527"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 6,
+        "fields": {
+            "title": "Sismo en 2024-07-04 00:51:1365 km al SO de OllagÃ¼e",
+            "content": "Magnitud: 2024-07-04 04:51:13, Profundidad: -21.763-68.508, Fecha y Hora: 120 km",
+            "created_at": "2024-07-04T12:05:13.134609"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 7,
+        "fields": {
+            "title": "Sismo en 2024-07-03 23:08:1035 km al NE de Alto del Carmen",
+            "content": "Magnitud: 2024-07-04 03:08:10, Profundidad: -28.505-70.274, Fecha y Hora: 112 km",
+            "created_at": "2024-07-04T12:05:13.134689"
+        }
+    },
+    {
+        "model": "blog.post",
+        "pk": 8,
+        "fields": {
             "title": "Sismo en 2024-07-03 20:51:5570 km al SE de Socaire",
             "content": "Magnitud: 2024-07-04 00:51:55, Profundidad: -24.040-67.407, Fecha y Hora: 262 km",
-            "created_at": "2024-07-04T05:00:00.167784"
+            "created_at": "2024-07-04T12:05:13.134768"
         }
     }
 ]
