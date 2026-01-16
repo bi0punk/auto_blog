@@ -6,6 +6,7 @@
   <title>Data EarthQuake</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+
   <style>
     .pad {
       padding: 20px;
@@ -42,10 +43,48 @@
       padding: 8px;
       text-align: left;
     }
+
+    /* ---- NUEVO: KPIs + badges + cajas de chart sin romper estilo ---- */
+    .terminal .kpi {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 12px;
+      margin-top: 10px;
+    }
+
+    .terminal .kpi .label {
+      color: #7CFF7C;
+      opacity: 0.9;
+    }
+
+    .terminal .kpi .value {
+      color: #00FF00;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .terminal .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid green;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-left: 6px;
+    }
+
+    .chart-box {
+      border: 1px solid green;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 12px;
+    }
   </style>
+
   <!-- DataTables CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-  <!--   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+
+  <!-- Plotly (NUEVO) -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 
   <!-- jQuery -->
   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -53,6 +92,8 @@
   <!-- DataTables JS -->
   <script type="text/javascript" charset="utf8"
     src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+  <!-- Bootstrap JS (lo mantengo como lo tenías; tu CSS bootstrap está comentado) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -69,6 +110,7 @@
       <div class="url"><a href="#">www.your-blog.com</a></div>
     </div>
   </div>
+
   <div id="top">
     <div class="content">
       <div id="menu">
@@ -81,8 +123,10 @@
       <h2>Simple Resume of Earthquakes</h2>
     </div>
   </div>
+
   <div class="content">
     <div id="main">
+
       <div class="right_side">
         <div class="pad">
           <h3>Thank you for visiting!</h3>
@@ -97,6 +141,7 @@
           </div>
           <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
           </p>
+
           <h3>Last Articles:</h3>
           <div class="cleanslate w24tz-current-time w24tz-small"
             style="display: inline-block !important; visibility: hidden !important; min-width:200px !important; min-height:100px !important;">
@@ -106,6 +151,7 @@
             <div id="clock_block_cb6663da3a02a81"></div>
           </div>
           <script type="text/javascript" src="//w.24timezones.com/l.js" async></script>
+
           <h3>Popular Articles:</h3>
           <ul>
             <li><a href="#">Weather</a></li>
@@ -114,6 +160,7 @@
           <a href="#"><img src="{% static 'blog/images/rss.jpg' %}" alt="RSS Feed"></a>
         </div>
       </div>
+
       <div class="right_side">
         <div class="pad">
           <h3>Categories:</h3>
@@ -126,36 +173,81 @@
           <p>some text.</p>
         </div>
       </div>
+
       <div id="left_side">
         <div class="intro">
-          <div class="pad">Daily summary of seismic movements in national territory, updated style blog <br>
+          <div class="pad">
+            Daily summary of seismic movements in national territory, updated style blog <br>
             <a href="#">Download</a>&nbsp; | &nbsp;<a href="#">Read more...</a>
           </div>
         </div>
 
-<!--         <div class="mpart">
-          <h2>Resumen del {{ fecha }}</h2>
-          <h3>Publicado el {{ fecha }} en <a href="#">Sismología Chile</a></h3>
-          <div class="card" style="width: 18rem;">
-            <!-- Contenido de la tarjeta -->
-  <!--         </div>
+        <!-- =========================
+             NUEVO: PANEL ÚLTIMO SISMO
+             Espera variables:
+             last_event: {time_local, time_utc, place, mag, mag_type, depth_km, lat, lon, source, url}
+             depth_series_json: [{time, depth_km, mag, place}, ...]
+        ========================== -->
+        <div class="mpart">
+          <h2>Último sismo detectado</h2>
+          <h3>Actualizado: {{ last_event.time_local|default:"--" }} (Chile)</h3>
+
           <div class="intro">
             <div class="pad">
               <div class="terminal">
-                {% for post in posts %}
-                <li>{{ post.title }} - {{ post.created_at }}</li>
-                {% empty %}
-                <li>No hay posts disponibles.</li>
-                {% endfor %}
+                <div>
+                  <strong>{{ last_event.place|default:"Sin ubicación" }}</strong>
+                  {% if last_event.source %}
+                  <span class="badge">{{ last_event.source }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="kpi">
+                  <div class="label">Magnitud</div>
+                  <div class="value">
+                    {{ last_event.mag|default:"--" }}
+                    {% if last_event.mag_type %}<span class="badge">{{ last_event.mag_type }}</span>{% endif %}
+                  </div>
+
+                  <div class="label">Profundidad</div>
+                  <div class="value">{{ last_event.depth_km|default:"--" }} km</div>
+
+                  <div class="label">Lat / Lon</div>
+                  <div class="value">{{ last_event.lat|default:"--" }}, {{ last_event.lon|default:"--" }}</div>
+
+                  <div class="label">UTC</div>
+                  <div class="value">{{ last_event.time_utc|default:"--" }}</div>
+                </div>
+
+                {% if last_event.url %}
+                <div style="margin-top:10px;">
+                  <a href="{{ last_event.url }}" target="_blank" rel="noopener">Ver fuente</a>
+                </div>
+                {% endif %}
+
+                <div class="chart-box">
+                  <div id="depthChart" style="height:260px;"></div>
+                </div>
+
+                <div class="chart-box">
+                  <div id="depthHistory" style="height:300px;"></div>
+                </div>
+
               </div>
             </div>
           </div>
-        </div> --> -->
+        </div>
+        <!-- ======= FIN PANEL ÚLTIMO SISMO ======= -->
 
+
+        <!-- =========================
+             POSTS (tu loop original)
+        ========================== -->
         {% for post in posts %}
         <div class="mpart">
           <h2>Resumen del {{ post.created_at }}</h2>
           <h3>Publicado el {{ post.created_at }} en <a href="#">Sismología Chile</a></h3>
+
           <div class="card" style="width: 18rem;">
             <div class="intro">
               <div class="pad">
@@ -171,39 +263,89 @@
         <p>No hay posts disponibles.</p>
         {% endfor %}
 
+        <!-- NOTA: eliminé el bloque duplicado "Resumen del {{ fecha }}" que volvía a listar posts,
+             para evitar duplicación y mantener limpio el layout. -->
 
-        <div class="mpart">
-          <h2>Resumen del {{ fecha }}</h2>
-          <h3>Publicado el {{ fecha }} en <a href="#">Sismología Chile</a></h3>
-          <div class="card" style="width: 18rem;">
-            <!-- Contenido de la tarjeta -->
-          </div>
-          <div class="intro">
-            <div class="pad">
-              <div class="terminal">
-                {% for post in posts %}
-                <li>{{ post.title }} - {{ post.created_at }}</li>
-                {% empty %}
-                <li>No hay posts disponibles.</li>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <!--           <p>Aditional info:</p>
-          <blockquote>
-            <p>Posted date: 15, Mayo, 2024 - 23:45 </p>
-          </blockquote> -->
-        <!--           <div class="date"><a href="#">Comments (5)</a></div> -->
         <div id="footer">
-          <div class="right">&copy; Copyright 2024, Your Website - Design: <a href="">Free
-              Css Templates</a></div>
+          <div class="right">&copy; Copyright 2024, Your Website - Design:
+            <a href="">Free Css Templates</a>
+          </div>
           <a href="#">Home</a> - <a href="http://validator.w3.org/check?uri=referer" title="Validate">XHTML</a> - <a
             href="http://jigsaw.w3.org/css-validator/check/referer" title="Validate">CSS</a>
         </div>
       </div>
+
+    </div>
+  </div>
+
+  <!-- =========================
+       Plotly JS (NUEVO)
+       Se alimenta de depth_series_json
+  ========================== -->
+  <script>
+    (function () {
+      // Datos desde Django (deben venir como JSON seguro)
+      const series = {{ depth_series_json|default:"[]"|safe }};
+
+      const layoutBase = {
+        paper_bgcolor: "black",
+        plot_bgcolor: "black",
+        font: { color: "#00ff00", family: "Courier New, monospace" },
+        margin: { l: 50, r: 20, t: 30, b: 40 },
+        xaxis: { gridcolor: "rgba(0,255,0,0.15)", zerolinecolor: "rgba(0,255,0,0.2)" },
+        yaxis: { gridcolor: "rgba(0,255,0,0.15)", zerolinecolor: "rgba(0,255,0,0.2)" }
+      };
+
+      if (!Array.isArray(series) || series.length === 0) {
+        const el1 = document.getElementById("depthChart");
+        const el2 = document.getElementById("depthHistory");
+        if (el1) el1.innerHTML = "<div style='opacity:.8'>Sin datos de profundidad aún.</div>";
+        if (el2) el2.innerHTML = "<div style='opacity:.8'>Sin historial aún.</div>";
+        return;
+      }
+
+      // Asumimos que series viene ordenado desc: último primero
+      const last = series[0];
+      const lastDepth = Number(last.depth_km);
+
+      // 1) Profundidad actual (barra)
+      Plotly.newPlot("depthChart", [{
+        type: "bar",
+        x: ["Profundidad (km)"],
+        y: [lastDepth],
+        text: [isFinite(lastDepth) ? (lastDepth.toFixed(1) + " km") : "N/A"],
+        textposition: "auto"
+      }], {
+        ...layoutBase,
+        title: { text: "Profundidad actual", font: { color: "#00ff00" } },
+        yaxis: { ...layoutBase.yaxis, title: "km", autorange: true }
+      }, { displayModeBar: false, responsive: true });
+
+      // 2) Historial profundidad (scatter)
+      const times = series.map(e => e.time);
+      const depths = series.map(e => Number(e.depth_km));
+
+      Plotly.newPlot("depthHistory", [{
+        type: "scatter",
+        mode: "lines+markers",
+        x: times,
+        y: depths,
+        customdata: series,
+        hovertemplate:
+          "Fecha: %{x}<br>" +
+          "Profundidad: %{y:.1f} km<br>" +
+          "Magnitud: %{customdata.mag}<br>" +
+          "%{customdata.place}<extra></extra>"
+      }], {
+        ...layoutBase,
+        title: { text: "Historial de profundidad", font: { color: "#00ff00" } },
+        xaxis: { ...layoutBase.xaxis, title: "Tiempo" },
+        yaxis: { ...layoutBase.yaxis, title: "Profundidad (km)" }
+      }, { displayModeBar: false, responsive: true });
+
+    })();
+  </script>
+
 </body>
 
 </html>
