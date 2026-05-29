@@ -1,20 +1,21 @@
 import os
 from pathlib import Path
-from celery.schedules import crontab
-from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import environ
+from celery.schedules import crontab
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, []),
+)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_uq764a!9!%r$i3i=0r-97(^)zibdt+jd80u!^)sh@0slql)r$'
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-# Application definition
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -23,9 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'auto_blog',
-    'blog',
     'django_celery_beat',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -58,18 +58,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'auto_blog.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db_url('DATABASE_URL', default='sqlite:///db.sqlite3'),
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,57 +77,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'es-cl'
+TIME_ZONE = 'America/Santiago'
 USE_I18N = True
-
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = '/static/'
-
-# Asegúrate de que la ruta de tus archivos estáticos sea correcta
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
     BASE_DIR / "blog/static/blog",
 ]
-
-# Define dónde se recopilarán los archivos estáticos para producción
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-# Configuración para Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+CELERY_BROKER_URL = env('REDIS_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = env('REDIS_URL', default='redis://localhost:6379/0')
+CELERY_TIMEZONE = 'America/Santiago'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-# Configuración para Celery Beat
 CELERY_BEAT_SCHEDULE = {
-    'mi-tarea-programada': {
-        'task': 'auto_blog.tasks.data_scraping',  # Asegúrate de que esta ruta es correcta
-        #'schedule': crontab(minute='*/5'),  # Ejecutar cada minuto
-        'schedule': crontab(minute=0, hour=8),  # Ejecutar a las 00:00 cada día'schedule': crontab(minute=0, hour=0),  # Ejecutar a las 00:00 cada día
-        #'schedule': timedelta(days=1),  # Ejecutar cada 24 horas
-    },
-    'load-fixture-every-hour': {
-        'task': 'auto_blog.tasks.load_fixture',
-        'schedule': crontab(minute='*'),  # Cada hora en el minuto 0
+    'scrape-earthquakes-daily': {
+        'task': 'auto_blog.tasks.scrape_and_save',
+        'schedule': crontab(minute=0, hour=8),
     },
 }
-
-
-
-
-# Si quieres usar un backend de resultados diferente, añade la configuración aquí
-# CELERY_RESULT_BACKEND = 'django-db'  # O cualquier otro backend que prefieras
