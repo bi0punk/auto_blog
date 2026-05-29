@@ -245,16 +245,31 @@
         ========================== -->
         {% for post in posts %}
         <div class="mpart">
-          <h2>Resumen del {{ post.created_at }}</h2>
-          <h3>Publicado el {{ post.created_at }} en <a href="#">Sismología Chile</a></h3>
+          <h2>{{ post.title }}</h2>
+          <h3>Publicado el {{ post.created_at|date:"d/m/Y H:i" }} en <a href="#">Sismología Chile</a></h3>
 
-          <div class="card" style="width: 18rem;">
-            <div class="intro">
-              <div class="pad">
-                <div class="terminal">
-                  <h5 class="card-title">{{ post.title }}</h5>
-                  <p class="card-text">{{ post.summary }}</p>
+          <div class="intro">
+            <div class="pad">
+              <div class="terminal">
+                <div class="kpi">
+                  <div class="label">Magnitud</div>
+                  <div class="value">{{ post.magnitude|default:"--" }}</div>
+
+                  <div class="label">Profundidad</div>
+                  <div class="value">{{ post.depth_km|default:"--" }} km</div>
+
+                  <div class="label">Ubicación</div>
+                  <div class="value">{{ post.location|default:"--" }}</div>
+
+                  <div class="label">Coordenadas</div>
+                  <div class="value">{{ post.latitude|default:"--" }}, {{ post.longitude|default:"--" }}</div>
+
+                  <div class="label">UTC</div>
+                  <div class="value">{{ post.utc_time|date:"Y-m-d H:i:s"|default:"--" }}</div>
                 </div>
+                {% if post.content %}
+                <p class="card-text">{{ post.content }}</p>
+                {% endif %}
               </div>
             </div>
           </div>

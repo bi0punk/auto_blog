@@ -1,98 +1,95 @@
-from celery import shared_task
+import logging
+import re
+from datetime import datetime, timezone
+
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
-import os
-from django.conf import settings
-import json
-from datetime import datetime
-from django.core.management import call_command
-from django.utils import timezone
+from celery import shared_task
+from django.db import transaction
+
+from blog.models import Post
+
+logger = logging.getLogger(__name__)
+
+
+def _parse_lat_lon(raw: str) -> tuple[float | None, float | None]:
+    match = re.match(r'([\-\d.]+)\s*/\s*([\-\d.]+)', raw)
+    if match:
+        return float(match.group(1)), float(match.group(2))
+    return None, None
+
+
+def _parse_utc_time(raw: str) -> datetime | None:
+    for fmt in ('%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S'):
+        try:
+            return datetime.strptime(raw.strip(), fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
 
 
 @shared_task
-def data_scraping():
-    url = 'https://www.sismologia.cl/sismicidad/catalogo/2024/07/20240704.html'
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Verificar que la solicitud fue exitosa
-    except requests.RequestException as e:
-        print(f"Error al realizar la solicitud: {e}")
-        return
+def scrape_and_save() -> int:
+    today = datetime.now()
+    url = (
+        f'https://www.sismologia.cl/sismicidad/catalogo/'
+        f'{today.year}/{today.month:02d}/{today.year}{today.month:02d}{today.day:02d}.html'
+    )
 
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Buscar la tabla usando la clase 'sismologia detalle'
+    logger.info('Scraping %s', url)
+
+    try:
+        resp = requests.get(url, timeout=30)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        logger.error('Error fetching %s: %s', url, e)
+        return 0
+
+    soup = BeautifulSoup(resp.text, 'html.parser')
     table = soup.find('table', class_='sismologia detalle')
     if table is None:
-        print("No se encontró ninguna tabla con la clase 'sismologia detalle' en el HTML.")
-        return
-    
-    print("Tabla encontrada en el HTML.")
+        logger.warning('Table not found on page')
+        return 0
 
-    # Verificar si la tabla tiene encabezados y filas
-    headers = [header.get_text(strip=True) for header in table.find_all('th')]
-    rows = table.find_all('tr')[1:]  # Omitir la primera fila si contiene los encabezados
-    
-    if not headers:
-        print("No se encontraron encabezados en la tabla.")
-        return
-    
+    rows = table.find_all('tr')[1:]
     if not rows:
-        print("No se encontraron filas en la tabla.")
-        return
-    
-    print(f"Encabezados encontrados: {headers}")
+        logger.warning('No data rows found in table')
+        return 0
 
-    data = []
+    created = 0
     for row in rows:
-        columns = row.find_all('td')
-        data.append([column.get_text(strip=True) for column in columns])
-    
-    df = pd.DataFrame(data, columns=headers)
-    
-    if df.empty:
-        print("El DataFrame está vacío.")
-    else:
-        print(df)
+        cols = [c.get_text(strip=True) for c in row.find_all('td')]
+        if len(cols) < 5:
+            continue
 
-    # Crear una lista de diccionarios con la estructura de fixtures
-    fixtures = []
-    for index, row in df.iterrows():
-        fixture = {
-            "model": "blog.post",
-            "pk": index + 1,
-            "fields": {
-                "title": f"Sismo en {row.iloc[0]}",
-                "content": f"Magnitud: {row.iloc[1]}, Profundidad: {row.iloc[2]}, Fecha y Hora: {row.iloc[3]}",
-                "created_at": datetime.now().isoformat()
-            }
-        }
-        fixtures.append(fixture)
+        local_raw = cols[0]
+        location = local_raw.split('/')[-1].strip() if '/' in local_raw else local_raw
 
-    # Guardar el JSON en el directorio de fixtures sin BOM
-    fixtures_dir = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures')
-    os.makedirs(fixtures_dir, exist_ok=True)
-    json_file_path = os.path.join(fixtures_dir, 'sismos_20240704.json')
-    
+        utc_time = _parse_utc_time(cols[1])
+        lat, lon = _parse_lat_lon(cols[2])
+        depth = _parse_float(cols[3])
+        magnitude = _parse_float(cols[4])
+
+        title = f'Sismo en {location}' if location else 'Sismo detectado'
+
+        with transaction.atomic():
+            Post.objects.create(
+                title=title,
+                location=location,
+                magnitude=magnitude,
+                depth_km=depth,
+                latitude=lat,
+                longitude=lon,
+                utc_time=utc_time,
+            )
+            created += 1
+
+    logger.info('Saved %d earthquake records', created)
+    return created
+
+
+def _parse_float(raw: str) -> float | None:
     try:
-        with open(json_file_path, 'w', encoding='utf-8') as json_file:
-            json.dump(fixtures, json_file, ensure_ascii=False, indent=4)
-    except IOError as e:
-        print(f"Error al guardar el archivo JSON: {e}")
-        return
-    
-    print("Ejecutando tarea programada")
-
-
-@shared_task
-def load_fixture():
-    fixture_path = os.path.join(settings.BASE_DIR, 'auto_blog', 'fixtures', 'sismos_20240704.json')
-    if os.path.exists(fixture_path):
-        try:
-            call_command('loaddata', fixture_path)
-            print("Fixture loaded successfully")
-        except Exception as e:
-            print(f"Error loading fixture: {e}")
-    else:
-        print(f"No fixture named 'sismos_20240702.json' found at {fixture_path}")
+        return float(raw.strip().replace(',', '.'))
+    except (ValueError, AttributeError):
+        return None
