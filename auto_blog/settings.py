@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default='change-this-to-a-random-secret-key')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
