@@ -297,10 +297,11 @@
        Plotly JS (NUEVO)
        Se alimenta de depth_series_json
   ========================== -->
+  {{ depth_series_json|default:"[]"|json_script:"depth-series-data" }}
   <script>
     (function () {
       // Datos desde Django (deben venir como JSON seguro)
-      const series = {{ depth_series_json|default:"[]"|safe }};
+      const series = JSON.parse(document.getElementById('depth-series-data').textContent);
 
       const layoutBase = {
         paper_bgcolor: "black",
