@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 
-from django.core.paginator import Page
 from django.test import TestCase
 from django.urls import reverse
 
