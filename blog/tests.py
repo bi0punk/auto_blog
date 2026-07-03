@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from django.test import TestCase
 from django.urls import reverse
@@ -15,7 +15,7 @@ class PostModelTest(TestCase):
             depth_km=120.0,
             latitude=-33.45,
             longitude=-70.67,
-            utc_time=datetime(2024, 7, 4, 10, 30, 0, tzinfo=timezone.utc),
+            utc_time=datetime(2024, 7, 4, 10, 30, 0, tzinfo=UTC),
         )
         self.assertEqual(str(post), 'Sismo en prueba')
         self.assertEqual(post.magnitude, 4.5)

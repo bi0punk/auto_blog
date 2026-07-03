@@ -1,4 +1,4 @@
-from datetime import timezone
+from datetime import UTC
 
 from django.test import TestCase
 
@@ -29,7 +29,7 @@ class TaskHelpersTest(TestCase):
         self.assertIsNotNone(dt)
         self.assertEqual(dt.year, 2024)
         self.assertEqual(dt.month, 7)
-        self.assertEqual(dt.tzinfo, timezone.utc)
+        self.assertEqual(dt.tzinfo, UTC)
 
     def test_parse_utc_time_invalid(self):
         self.assertIsNone(_parse_utc_time(''))

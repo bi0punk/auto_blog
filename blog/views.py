@@ -1,3 +1,4 @@
+import contextlib
 import json
 import locale
 from datetime import datetime
@@ -9,13 +10,10 @@ from .models import Post
 
 
 def post_list(request):
-    try:
+    with contextlib.suppress(locale.Error):
         locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-    except locale.Error:
-        try:
-            locale.setlocale(locale.LC_TIME, 'es_ES')
-        except locale.Error:
-            pass
+    with contextlib.suppress(locale.Error):
+        locale.setlocale(locale.LC_TIME, 'es_ES')
 
     ahora = datetime.now()
     fecha_formateada = ahora.strftime("%A, %d de %B de %Y")
