@@ -10,3 +10,7 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 ignore = ["E501"]
+
+[tool.mypy]
+ignore_missing_imports = true
+exclude = ["blog/migrations/", "auto_blog/migrations/"]
